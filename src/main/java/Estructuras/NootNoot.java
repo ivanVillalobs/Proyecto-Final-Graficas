@@ -43,7 +43,7 @@ public class NootNoot {
 
         Cono cono = new Cono();
         double rotationAngle2 = Math.toRadians(250); // Rotar 45 grados
-        cono.dibujarCono(g, x+215, y-230, 30, 80, new Color(231, 81, 81), rotationAngle2);//pico
+        cono.dibujarCono(g, x+230, y-230, 30, 80, new Color(231, 81, 81), rotationAngle2);//pico
         //cono.dibujarCono(g, 415, 70, 30, 80, new Color(231, 81, 81), rotationAngle2);//pico
 
         Circulo circulo = new Circulo();

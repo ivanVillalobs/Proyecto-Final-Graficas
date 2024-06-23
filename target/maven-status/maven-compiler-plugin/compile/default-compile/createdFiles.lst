@@ -4,13 +4,16 @@ main\ProyectoFinalGraficas.class
 metodos\Poligono.class
 metodos\Rectangulo1.class
 metodos\Rectangulo.class
+metodos\Esfera3D.class
 metodos\RectanguloBrazo.class
 metodos\Esfera.class
+Estructuras\Iglu.class
 metodos\Cono.class
 metodos\Circulo.class
 metodos\Ovalo.class
 Estructuras\NootNoot.class
 panel\Panel.class
 metodos\floodFillIterative.class
+Estructuras\BoobSponja.class
 metodos\Bresenham.class
 metodos\Ovoide.class

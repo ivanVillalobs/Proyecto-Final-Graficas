@@ -18,6 +18,7 @@ Estructuras\Fondo.class
 metodos\circuloPolares.class
 metodos\MedioOvalo.class
 main\ProyectoFinalGraficas.class
+panel\Panel$2.class
 Estructuras\piernas.class
 metodos\Poligono.class
 Estructuras\CajaPizza.class
@@ -26,4 +27,5 @@ Estructuras\ProyectoFinal$Point3D.class
 metodos\Esfera3D.class
 Estructuras\ProyectoFinal.class
 metodos\Ovalo.class
+panel\Panel$1.class
 metodos\Bresenham.class

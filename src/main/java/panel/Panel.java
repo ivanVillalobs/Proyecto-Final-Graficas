@@ -1,7 +1,9 @@
 package panel;
 
 import Estructuras.BoobSponja;
+import Estructuras.CajaPizza;
 import Estructuras.Fondo;
+import Estructuras.ProyectoFinal;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -14,7 +16,7 @@ import javax.swing.Timer;
 public class Panel extends JPanel implements Runnable {
 
     private BufferedImage buffer; // Buffer para dibujar el rectángulo
-    private int x = 1, y = 700; // Coordenadas iniciales de noot noot
+    private int x = 1, y = 700, mov; // Coordenadas iniciales de noot noot
 
     int xInicial1 = 850;
     int yInicial1 = 180;
@@ -27,6 +29,9 @@ public class Panel extends JPanel implements Runnable {
     int xmount = 850;
     int xmount2 = 1400;
     int xmount3 = 2000;
+    int rotar=0;
+    int rotar2=0;
+    int rotar3=0;
 
     Thread animationThread = new Thread(this);
 
@@ -41,35 +46,45 @@ public class Panel extends JPanel implements Runnable {
         super.paintComponent(g);
         g.drawImage(buffer, 0, 0, this);
 
-    //fondo-----------------------------------------------------------------
-    Fondo fondo = new Fondo();
-    fondo.fondoboob (g);            
-    fondo.drawEstrella (g, xInicial1, yInicial1, iteracion, radio);    
-    fondo.drawEstrella (g, xInicial2, yInicial2, iteracion, radio);
-    fondo.drawEstrella (g, xInicial3, yInicial3, iteracion, radio);
-    fondo.montañasFondo(g, xmount,250);
-    fondo.montañasFondo2(g, xmount2,250);
-    fondo.montañasFondo3(g, xmount3,250);
-    fondo.lineas(g);
-    
-//        // Ejemplo de uso de la clase BoobSponja
-    //xc perspectiva
-    //offset coordenada del cubo
-    BoobSponja boobSponja = new BoobSponja(10, 10, 11, 100, 120, 15, 200, 200, 100, Color.YELLOW);
-    BoobSponja boobSponja2 = new BoobSponja(10, 10, 11, 100, 20, 15, 200, 300, 100, new Color(123, 63, 6));
-//        boobSponja.rotarEnX(x); // Rotar 30 grados en el eje Y
-//        boobSponja.rotarEnY(); // Rotar 30 grados en el eje Y
-//        boobSponja.trasladar(400, 400, 200);
-    //diseño del boob ------------------------------------------------------
-//        boobSponja2.manos2(g,Color.YELLOW);
-//        boobSponja.dibujarCuboide(g);
-//        boobSponja2.dibujarCuboide2(g);
-//        boobSponja2.manos1(g,Color.YELLOW);
-//        boobSponja2.rotarPiernasEnX(x);
-//        boobSponja2.piernas(g,Color.YELLOW);
-}
+        //fondo-----------------------------------------------------------------
+        Fondo fondo = new Fondo();
+        fondo.fondoboob(g);
+        fondo.drawEstrella(g, xInicial1, yInicial1, iteracion, radio);
+        fondo.drawEstrella(g, xInicial2, yInicial2, iteracion, radio);
+        fondo.drawEstrella(g, xInicial3, yInicial3, iteracion, radio);
+        fondo.montañasFondo(g, xmount, 250);
+        fondo.montañasFondo2(g, xmount2, 250);
+        fondo.montañasFondo3(g, xmount3, 250);
+        fondo.lineas(g);
 
-public void putPixel(int x, int y, Color color) {
+//        // Ejemplo de uso de la clase BoobSponja
+        //xc perspectiva
+        //offset coordenada del cubo
+        BoobSponja boobSponja = new BoobSponja(10, 10, 11, 100, 120, 15, mov, 250, 100, Color.YELLOW);
+        BoobSponja boobSponja2 = new BoobSponja(10, 10, 11, 100, 20, 15, mov, 350, 100, new Color(123, 63, 6));
+        CajaPizza cajaPizza = new CajaPizza(10, 10, 100, 100, 20, 550, mov + 15, 300, 100, Color.WHITE);
+        
+//        boobSponja.rotarEnX(x); // Rotar 30 grados en el eje Y
+//        boobSponja.rotarEnY(x); // Rotar 30 grados en el eje Y
+//        boobSponja.trasladar(400, 400, 200);
+        //diseño del boob ------------------------------------------------------
+        boobSponja2.manos2(g, Color.YELLOW);
+        boobSponja.dibujarCuboide(g);
+        boobSponja2.dibujarCuboide2(g);
+        boobSponja2.manos1(g, Color.YELLOW);
+        boobSponja2.rotarPiernasEnX(x);
+        boobSponja2.piernas(g, Color.YELLOW);
+//        // Crear una caja de pizza en el constructor del panel                
+//        // Dibujar la caja de pizza
+        cajaPizza.rotarEnY(rotar);
+        cajaPizza.rotarEnX(rotar3);                
+        cajaPizza.dibujar(g);        
+        
+//        cajaPizza.rotarEnX(x); // Rotar 30 grados en el eje Y
+//        cajaPizza.rotarEnY(x); // Rotar 30 grados en el eje Y
+    }
+
+    public void putPixel(int x, int y, Color color) {
         if (x >= 0 && x < buffer.getWidth() && y >= 0 && y < buffer.getHeight()) {
             buffer.setRGB(x, y, color.getRGB());
             repaint();
@@ -84,19 +99,20 @@ public void putPixel(int x, int y, Color color) {
             frame.setLocationRelativeTo(null);
             frame.getContentPane().add(this); // Agrega el panel actual al JFrame
             frame.setVisible(true);
+            //frame.add(new ProyectoFinal());
 
             // Iniciar el hilo de la animación después de que se haya creado el frame            
             animationThread.start();
-            
+
         });
     }
 
     @Override
-public void run() {
+    public void run() {
         int increment = 1; // Definir el incremento en x
 
         while (true) {
-            // Incrementar x en cada iteración
+            // Incrementar x en cada iteración           
             x += increment;
             y += increment;
             xInicial1 -= increment;
@@ -105,8 +121,29 @@ public void run() {
             xmount -= increment;
             xmount2 -= increment;
             xmount3 -= increment;
+            rotar += increment;
 
             // Verificar los límites de la pantalla (opcional, para evitar que salga de la pantalla)
+            if (x <= 500) {
+                mov = x;
+            } else {
+                mov = 500;
+            }
+            if (x <= 360) {
+                rotar = x;
+            } else {
+                rotar = 0;
+            }
+            if (x >= 500) {
+                rotar2 += 1;
+                if(rotar2 <= 360){
+                    rotar3 += 1;
+                }else{
+                    rotar3 = 0;
+                }
+            } else {
+                rotar2 = 0;
+            }
             if (xInicial1 == -50) {
                 xInicial1 = 1600;// Cambiar la dirección al alcanzar los límites
             }
@@ -116,13 +153,13 @@ public void run() {
             if (xInicial3 == -50) {
                 xInicial3 = 2000;// Cambiar la dirección al alcanzar los límites
             }
-            if(xmount == -400){
+            if (xmount == -400) {
                 xmount = 750;
             }
-            if(xmount2 == -600){
+            if (xmount2 == -600) {
                 xmount2 = 1400;
             }
-            if(xmount3 == -600){
+            if (xmount3 == -600) {
                 xmount3 = 2000;
             }
             repaint(); // Vuelve a dibujar el panel

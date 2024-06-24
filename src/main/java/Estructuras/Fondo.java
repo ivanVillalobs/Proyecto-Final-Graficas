@@ -143,10 +143,36 @@ public class Fondo {
         g2d.dispose();
     }
     
-    public void lineas(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g.create();
-//        g2d.setColor(new Color(255,245,155));
-        g2d.setColor(Color.red);
-        g2d.drawArc(250, 250, 100, 250, 100, 30);
+public void lineas(Graphics g) {
+    Graphics2D g2d = (Graphics2D) g.create();
+    
+    // Coordenadas y dimensiones de la arena
+    int arenaY = 250;
+    int arenaHeight = 250;
+    int arenaWidth = 800;
+    
+    // Coordenadas y dimensiones del arco
+    int arcWidth = 160;
+    int arcHeight = 30; // Ajusta este valor según la altura que desees para el arco
+
+    // Número de arcos y espacio entre ellos
+    int numArcos = 5;
+    int espacio = (arenaWidth - numArcos * arcWidth) / (numArcos + 1);
+
+    // Espacio vertical entre cada línea de arcos
+    int espacioLineas = 40; // Ajusta este valor según el espacio que desees entre las líneas de arcos
+
+    g2d.setColor(new Color(255, 245, 155));
+
+    // Dibujar múltiples líneas de arcos
+    for (int y = arenaY + arenaHeight - arcHeight; y >= arenaY; y -= espacioLineas) {
+        for (int i = 0; i < numArcos; i++) {
+            int arcX = espacio + i * (arcWidth + espacio);
+            g2d.drawArc(arcX, y, arcWidth, arcHeight, 0, 180);
+        }
     }
+}
+
+
+
 }

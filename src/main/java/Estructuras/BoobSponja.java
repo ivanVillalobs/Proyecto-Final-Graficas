@@ -75,7 +75,7 @@ public class BoobSponja {
         g2d.fillPolygon(xPoints, yPoints, 4);
 
         // Dibujar las aristas del cuboide
-        g2d.setColor(Color.BLACK);
+        g2d.setColor(Color.YELLOW);
         for (int i = 0; i < 4; i++) {
             g2d.drawLine(projectedVertices[i][0], projectedVertices[i][1], projectedVertices[(i + 1) % 4][0], projectedVertices[(i + 1) % 4][1]);
             g2d.drawLine(projectedVertices[i + 4][0], projectedVertices[i + 4][1], projectedVertices[(i + 1) % 4 + 4][0], projectedVertices[(i + 1) % 4 + 4][1]);
@@ -83,6 +83,7 @@ public class BoobSponja {
         }
 
         // Definir las posiciones de los círculos al frente del cuboide
+        g2d.setColor(new Color(161,165,33,255));
         int circleDiameter = 10;
         int[][] circleFrontPositions = {
             {projectedVertices[0][0] + circleDiameter, projectedVertices[0][1] + circleDiameter},
@@ -240,8 +241,8 @@ public class BoobSponja {
         }
 
         // Dibujar las manos a los lados del cuboide
-        int manoWidth = 10; // Ancho de la mano
-        int manoHeight = 70; // Altura de la mano
+        int manoWidth = 70; // Ancho de la mano
+        int manoHeight = 10; // Altura de la mano
         int manoY = (projectedVertices[0][1] + projectedVertices[1][1]) / 2 - manoHeight / 2; // Posición Y de las manos
 
         // Posición X de la mano izquierda
@@ -251,12 +252,12 @@ public class BoobSponja {
 
         // Dibujar las manos como rectángulos
         g2d.setColor(q); // Color de las manos
-        g2d.fillRect(manoX1, manoY - 20, manoWidth, manoHeight); // Dibujar mano izquierda
+        g2d.fillRect(manoX1 + 60, manoY - 20, manoWidth, manoHeight); // Dibujar mano izquierda
         //g2d.fillRect(manoX2, manoY - 20, manoWidth, manoHeight); // Dibujar mano derecha
 
         // Dibujar las manos como rectángulos con contorno negro
         g2d.setColor(Color.BLACK); // Color del contorno
-        g2d.drawRect(manoX1, manoY - 20, manoWidth, manoHeight); // Contorno de la mano izquierda
+        g2d.drawRect(manoX1 + 60, manoY - 20, manoWidth, manoHeight); // Contorno de la mano izquierda
         //g2d.drawRect(manoX2, manoY - 20, manoWidth, manoHeight); // Contorno de la mano derecha
 
         g2d.dispose();
@@ -272,8 +273,8 @@ public class BoobSponja {
         }
 
         // Dibujar las manos a los lados del cuboide
-        int manoWidth = 10; // Ancho de la mano
-        int manoHeight = 70; // Altura de la mano
+        int manoWidth = 50; // Ancho de la mano
+        int manoHeight = 10; // Altura de la mano
         int manoY = (projectedVertices[0][1] + projectedVertices[1][1]) / 2 - manoHeight / 2; // Posición Y de las manos
 
         // Posición X de la mano izquierda

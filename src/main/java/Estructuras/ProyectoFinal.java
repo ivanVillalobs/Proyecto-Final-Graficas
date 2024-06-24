@@ -38,10 +38,6 @@ public class ProyectoFinal extends JPanel {
     private double cylinderRadius = 20;
     private double cylinderHeight = 80;
     private double limbRadius = 7;
-    private double limbHeight = 70;
-    private double legMovementPhase = 0;
-    private double legMovementSpeed = 0.05;
-    private boolean isWalking = true;
 
 
 
@@ -49,11 +45,10 @@ public class ProyectoFinal extends JPanel {
     
 
     public ProyectoFinal() {
-        setPreferredSize(new Dimension(650, 650));
+        setPreferredSize(new Dimension(800, 500));
         setBackground(Color.WHITE);
         buffer = new BufferedImage(800, 800, BufferedImage.TYPE_INT_RGB);
         graPixel = buffer.createGraphics();
-        startRotation();
     }
 
     
@@ -68,46 +63,34 @@ public class ProyectoFinal extends JPanel {
         centerPosition.y = y;
         centerPosition.z = z;
     }
-
-    private void startRotation() {
-        timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                if (isWalking) {
-                    legMovementPhase += legMovementSpeed;
-                    if (legMovementPhase > 1 || legMovementPhase < 0) {
-                        legMovementSpeed = -legMovementSpeed;
-                        legMovementPhase += legMovementSpeed;
-                    }
-                }
-                repaint();
-            }
-        }, 0, 30);
-    }
     
 
     @Override
-    protected void paintComponent(Graphics g) {
+    public void paintComponent(Graphics g) {
         super.paintComponent(g);
         graPixel.setColor(Color.WHITE);
         graPixel.fillRect(0, 0, buffer.getWidth(), buffer.getHeight());
         //Brazo Derecho
-        drawLimb(new Point3D(centerPosition.x+10, centerPosition.y +10, centerPosition.z), new Point3D(centerPosition.x+5, centerPosition.y + 50, centerPosition.z));
-        drawLimb(new Point3D(centerPosition.x+5, centerPosition.y +50, centerPosition.z), new Point3D(centerPosition.x+10, centerPosition.y + 90, centerPosition.z));
+        drawLimb(new Point3D(centerPosition.x+10, centerPosition.y +10-200, centerPosition.z), new Point3D(centerPosition.x+5, centerPosition.y + 50 -200, centerPosition.z));
+        drawLimb(new Point3D(centerPosition.x+5, centerPosition.y +50-200, centerPosition.z), new Point3D(centerPosition.x+10, centerPosition.y + 90 -200, centerPosition.z));
+        //Pierna Derecha
+        drawLimb(new Point3D(centerPosition.x-10, centerPosition.y + 110-200, centerPosition.z), new Point3D(centerPosition.x-20, centerPosition.y + 150 -200, centerPosition.z));
+        drawLimb(new Point3D(centerPosition.x-20, centerPosition.y + 150-200, centerPosition.z), new Point3D(centerPosition.x-50, centerPosition.y + 190 -200, centerPosition.z));
+       
         drawCylinder();
         drawSphere();
         drawFace();
         //Brazo Izquierdo
-        drawLimb(new Point3D(centerPosition.x-30, centerPosition.y +10, centerPosition.z), new Point3D(centerPosition.x-35, centerPosition.y + 50, centerPosition.z));
-        drawLimb(new Point3D(centerPosition.x-35, centerPosition.y +50, centerPosition.z), new Point3D(centerPosition.x-30, centerPosition.y + 90, centerPosition.z));
-        
-        drawMovingLegs(g);
+        drawLimb(new Point3D(centerPosition.x-30, centerPosition.y +10 -200, centerPosition.z), new Point3D(centerPosition.x-35, centerPosition.y + 50 -200, centerPosition.z));
+        drawLimb(new Point3D(centerPosition.x-35, centerPosition.y +50 -200, centerPosition.z), new Point3D(centerPosition.x-30, centerPosition.y + 90 -200, centerPosition.z));
+        // Pierna Izquierda
+        drawLimb(new Point3D(centerPosition.x-10, centerPosition.y + 110 -200, centerPosition.z), new Point3D(centerPosition.x+10, centerPosition.y + 150 -200, centerPosition.z));
+        drawLimb(new Point3D(centerPosition.x+10, centerPosition.y + 150 -200, centerPosition.z),new Point3D(centerPosition.x+10, centerPosition.y + 190 -200, centerPosition.z));
 
         g.drawImage(buffer, 0, 0, null);
     }
 
-    private void drawSphere() {
+    public void drawSphere() {
         Point3D[][] points = new Point3D[NUM_U][NUM_V];
         Point2D[][] projectedPoints = new Point2D[NUM_U][NUM_V];
     
@@ -129,7 +112,7 @@ public class ProyectoFinal extends JPanel {
                 Point2D p3 = projectedPoints[i][j + 1];
                 Point2D p4 = projectedPoints[(i + 1) % NUM_U][j + 1];
                 int[] xPoints = {(int) p1.x, (int) p2.x, (int) p4.x, (int) p3.x};
-                int[] yPoints = {(int) p1.y - 100, (int) p2.y - 100, (int) p4.y - 100, (int) p3.y - 100};
+                int[] yPoints = {(int) p1.y - 100-200, (int) p2.y - 100-200, (int) p4.y - 100-200, (int) p3.y - 100-200};
                 graPixel.setColor(SKIN_COLOR);
                 graPixel.fillPolygon(xPoints, yPoints, 4);
             }
@@ -146,51 +129,51 @@ public class ProyectoFinal extends JPanel {
     
         // Mejillas
         graPixel.setColor(SKIN_COLOR);
-        graPixel.fillRect((int)projectedLeftEye.x - 235, (int)projectedLeftEye.y + 15 - 100, 80, 60);
+        graPixel.fillRect((int)projectedLeftEye.x - 235, (int)projectedLeftEye.y + 15 - 100-200, 80, 60);
         graPixel.setColor(Color.BLACK);
     
         // Ojos
         graPixel.setColor(EYE_COLOR);
-        graPixel.fillOval((int)projectedLeftEye.x - 215, (int)projectedLeftEye.y + 10 - 100, 30, 50);
-        graPixel.fillOval((int)projectedRightEye.x - 220, (int)projectedRightEye.y + 10 - 100, 30, 50);
+        graPixel.fillOval((int)projectedLeftEye.x - 215, (int)projectedLeftEye.y + 10 - 100-200, 30, 50);
+        graPixel.fillOval((int)projectedRightEye.x - 220, (int)projectedRightEye.y + 10 - 100-200, 30, 50);
         graPixel.setColor(Color.BLACK);
-        graPixel.drawOval((int)projectedLeftEye.x - 215, (int)projectedLeftEye.y + 10 - 100, 30, 50);
-        graPixel.drawOval((int)projectedRightEye.x - 220, (int)projectedRightEye.y + 10 - 100, 30, 50);
+        graPixel.drawOval((int)projectedLeftEye.x - 215, (int)projectedLeftEye.y + 10 - 100-200, 30, 50);
+        graPixel.drawOval((int)projectedRightEye.x - 220, (int)projectedRightEye.y + 10 - 100-200, 30, 50);
     
         // Pupilas
         graPixel.setColor(PUP_COLOR);
-        graPixel.fillRect((int)projectedLeftEye.x - 200, (int)projectedLeftEye.y + 30 - 100, 10, 15);
-        graPixel.fillRect((int)projectedRightEye.x - 205, (int)projectedRightEye.y + 30 - 100, 10, 15);
+        graPixel.fillRect((int)projectedLeftEye.x - 200, (int)projectedLeftEye.y + 30 - 100 -200, 10, 15);
+        graPixel.fillRect((int)projectedRightEye.x - 205, (int)projectedRightEye.y + 30 - 100-200, 10, 15);
         graPixel.setColor(Color.BLACK);
-        graPixel.drawRect((int)projectedLeftEye.x - 200, (int)projectedLeftEye.y + 30 - 100, 10, 15);
-        graPixel.drawRect((int)projectedRightEye.x - 205, (int)projectedRightEye.y + 30 - 100, 10, 15);
+        graPixel.drawRect((int)projectedLeftEye.x - 200, (int)projectedLeftEye.y + 30 - 100-200, 10, 15);
+        graPixel.drawRect((int)projectedRightEye.x - 205, (int)projectedRightEye.y + 30 - 100-200, 10, 15);
     
         // Parpados
         graPixel.setColor(SKIN_COLOR2);
-        graPixel.fillRect((int)projectedLeftEye.x - 215, (int)projectedLeftEye.y + 10 - 100, 30, 25);
-        graPixel.fillRect((int)projectedRightEye.x - 220, (int)projectedRightEye.y + 10 - 100, 30, 25);
+        graPixel.fillRect((int)projectedLeftEye.x - 215, (int)projectedLeftEye.y + 10 - 100-200, 30, 25);
+        graPixel.fillRect((int)projectedRightEye.x - 220, (int)projectedRightEye.y + 10 - 100-200, 30, 25);
         graPixel.setColor(Color.BLACK);
-        graPixel.drawRect((int)projectedLeftEye.x - 215, (int)projectedLeftEye.y + 10 - 100, 30, 25);
-        graPixel.drawRect((int)projectedRightEye.x - 220, (int)projectedRightEye.y + 10 - 100, 30, 25);
+        graPixel.drawRect((int)projectedLeftEye.x - 215, (int)projectedLeftEye.y + 10 - 100-200, 30, 25);
+        graPixel.drawRect((int)projectedRightEye.x - 220, (int)projectedRightEye.y + 10 - 100-200, 30, 25);
     
         // Boca
         graPixel.setColor(SKIN_COLOR);
-        graPixel.fillOval((int)projectedRightEye.x - 280, (int)projectedRightEye.y + 60 - 100, 105, 30);
+        graPixel.fillOval((int)projectedRightEye.x - 280, (int)projectedRightEye.y + 60 - 100-200, 105, 30);
         graPixel.setColor(Color.BLACK);
-        graPixel.drawLine((int)projectedRightEye.x - 250, (int)projectedRightEye.y + 75 - 100, (int)projectedRightEye.x - 270 + 85, (int)projectedRightEye.y + 75 - 100);
+        graPixel.drawLine((int)projectedRightEye.x - 250, (int)projectedRightEye.y + 75 - 100-200, (int)projectedRightEye.x - 270 + 85, (int)projectedRightEye.y + 75 - 100-200);
     
         // Nariz
         graPixel.setColor(Color.BLACK);
-        graPixel.drawOval((int)projectedRightEye.x - 235, (int)projectedRightEye.y + 50 - 100, 40, 70);
+        graPixel.drawOval((int)projectedRightEye.x - 235, (int)projectedRightEye.y + 50 - 100 - 200, 40, 70);
         graPixel.setColor(SKIN_COLOR);
-        graPixel.fillOval((int)projectedRightEye.x - 235, (int)projectedRightEye.y + 50 - 100, 40, 70);
+        graPixel.fillOval((int)projectedRightEye.x - 235, (int)projectedRightEye.y + 50 - 100 -200, 40, 70);
         graPixel.setColor(Color.BLACK);
-        graPixel.drawOval((int)projectedRightEye.x - 235, (int)projectedRightEye.y + 50 - 100, 40, 70);
+        graPixel.drawOval((int)projectedRightEye.x - 235, (int)projectedRightEye.y + 50 - 100 -200, 40, 70);
     }
     
     
 
-    private Point3D transformEye(Point3D eye) {
+    public Point3D transformEye(Point3D eye) {
         Point3D scaled = scale(eye, scaleX, scaleY, scaleZ);
         return rotate(scaled, rotationAngleX, rotationAngleY, rotationAngleZ);
     }
@@ -203,12 +186,12 @@ public class ProyectoFinal extends JPanel {
             double theta = 2 * Math.PI * i / NUM_U;
             points[i][0] = new Point3D(
                 cylinderRadius * Math.cos(theta) + centerPosition.x-10,
-                centerPosition.y+230 - cylinderHeight / 2,
+                centerPosition.y+230 - cylinderHeight / 2 -200,
                 cylinderRadius * Math.sin(theta) + centerPosition.z
             );
             points[i][1] = new Point3D(
                 cylinderRadius * Math.cos(theta) + centerPosition.x-10,
-                centerPosition.y+50 + cylinderHeight / 2,
+                centerPosition.y+50 + cylinderHeight / 2 -200,
                 cylinderRadius * Math.sin(theta) + centerPosition.z
             );
     
@@ -217,7 +200,7 @@ public class ProyectoFinal extends JPanel {
         }
 
         graPixel.setColor(SKIN_COLOR);
-        graPixel.fillOval(163,460, 50, 60);
+        graPixel.fillOval(163,460-200, 50, 60);
     
         // Dibuja los lados del cilindro
         for (int i = 0; i < NUM_U; i++) {
@@ -229,21 +212,6 @@ public class ProyectoFinal extends JPanel {
         }
 
         
-    }
-    private void drawMovingLegs(Graphics g) {
-        double offset = 50 * Math.sin(Math.PI * legMovementPhase);
-    
-        // Pierna Derecha
-        drawLimb(new Point3D(centerPosition.x-10, centerPosition.y + 110, centerPosition.z),
-                 new Point3D(centerPosition.x-20 + offset, centerPosition.y + 150, centerPosition.z));
-        drawLimb(new Point3D(centerPosition.x-20 + offset, centerPosition.y + 150, centerPosition.z),
-                 new Point3D(centerPosition.x-50 + offset*2, centerPosition.y + 190, centerPosition.z));
-    
-        // Pierna Izquierda
-        drawLimb(new Point3D(centerPosition.x-10, centerPosition.y + 110, centerPosition.z),
-                 new Point3D(centerPosition.x+10 - offset, centerPosition.y + 150, centerPosition.z));
-        drawLimb(new Point3D(centerPosition.x+10 - offset, centerPosition.y + 150, centerPosition.z),
-                 new Point3D(centerPosition.x+10 - offset*2, centerPosition.y + 190, centerPosition.z));
     }
     
     
@@ -287,14 +255,14 @@ public class ProyectoFinal extends JPanel {
         return new Point3D(x, y, z);
     }
 
-    private Point3D scale(Point3D point, double scaleX, double scaleY, double scaleZ) {
+    public Point3D scale(Point3D point, double scaleX, double scaleY, double scaleZ) {
         double x = point.x * scaleX;
         double y = point.y * scaleY;
         double z = point.z * scaleZ;
         return new Point3D(x, y, z);
     }
 
-    private Point3D rotate(Point3D point, double angleX, double angleY, double angleZ) {
+    public Point3D rotate(Point3D point, double angleX, double angleY, double angleZ) {
         double cosX = Math.cos(angleX);
         double sinX = Math.sin(angleX);
         double cosY = Math.cos(angleY);
@@ -320,25 +288,25 @@ public class ProyectoFinal extends JPanel {
         return point;
     }
 
-    private Point2D applyPerspective(Point3D point) {
+    public Point2D applyPerspective(Point3D point) {
         double scaleFactor = 1 / (1 + point.z * PERSPECTIVE_FACTOR);
         double x = point.x * scaleFactor + buffer.getWidth() / 2.0 + translationX;
         double y = point.y * scaleFactor + buffer.getHeight() / 2.0;
         return new Point2D(x, y);
     }
 
-//    public static void main(String[] args) {
-//        SwingUtilities.invokeLater(() -> {
-//            JFrame frame = new JFrame("Calamardo");
-//            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//            
-//            frame.pack();
-//            frame.setLocationRelativeTo(null);
-//            frame.setVisible(true);
-//        });
-//    }
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            JFrame frame = new JFrame("Calamardo");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.add(new ProyectoFinal());
+            frame.pack();
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+        });
+    }
 
-    private static class Point3D {
+    public static class Point3D {
         double x, y, z;
         Point3D(double x, double y, double z) {
             this.x = x;
@@ -347,7 +315,7 @@ public class ProyectoFinal extends JPanel {
         }
     }
 
-    private static class Point2D {
+    public static class Point2D {
         double x, y;
         Point2D(double x, double y) {
             this.x = x;

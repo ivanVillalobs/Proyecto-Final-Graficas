@@ -1,6 +1,7 @@
 metodos\Rectangulo1.class
 metodos\Rectangulo.class
 metodos\RectanguloBrazo.class
+Estructuras\Calamardo.class
 metodos\Esfera.class
 Estructuras\Iglu.class
 metodos\Cono.class
@@ -22,5 +23,4 @@ Estructuras\ProyectoFinal$Point3D.class
 metodos\Esfera3D.class
 Estructuras\ProyectoFinal.class
 metodos\Ovalo.class
-Estructuras\ProyectoFinal$1.class
 metodos\Bresenham.class

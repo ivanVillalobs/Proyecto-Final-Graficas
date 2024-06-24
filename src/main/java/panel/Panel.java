@@ -29,15 +29,17 @@ public class Panel extends JPanel implements Runnable {
     int xmount = 850;
     int xmount2 = 1400;
     int xmount3 = 2000;
-    int rotar=0;
-    int rotar2=0;
-    int rotar3=0;
+    int rotar = 0;
+    int rotar2 = 0;
+    int rotar3 = 0;
+    int x1 = 1;
 
     Thread animationThread = new Thread(this);
+    private ProyectoFinal proyectoFinal; // Instancia de ProyectoFinal
 
     public Panel() {
-        buffer = new BufferedImage(800, 500, BufferedImage.TYPE_INT_ARGB);
-        setBackground(Color.WHITE); // Establecer el color de fondo del panel
+        buffer = new BufferedImage(800, 800, BufferedImage.TYPE_INT_ARGB);
+        proyectoFinal = new ProyectoFinal(); // Inicializar ProyectoFinal
 
     }
 
@@ -63,7 +65,7 @@ public class Panel extends JPanel implements Runnable {
         BoobSponja boobSponja = new BoobSponja(10, 10, 11, 100, 120, 15, mov, 250, 100, Color.YELLOW);
         BoobSponja boobSponja2 = new BoobSponja(10, 10, 11, 100, 20, 15, mov, 350, 100, new Color(123, 63, 6));
         CajaPizza cajaPizza = new CajaPizza(10, 10, 100, 100, 20, 550, mov + 15, 300, 100, Color.WHITE);
-        
+
 //        boobSponja.rotarEnX(x); // Rotar 30 grados en el eje Y
 //        boobSponja.rotarEnY(x); // Rotar 30 grados en el eje Y
 //        boobSponja.trasladar(400, 400, 200);
@@ -77,11 +79,12 @@ public class Panel extends JPanel implements Runnable {
 //        // Crear una caja de pizza en el constructor del panel                
 //        // Dibujar la caja de pizza
         cajaPizza.rotarEnY(rotar);
-        cajaPizza.rotarEnX(rotar3);                
-        cajaPizza.dibujar(g);        
-        
+        cajaPizza.rotarEnX(rotar3);
+        cajaPizza.dibujar(g);
+
 //        cajaPizza.rotarEnX(x); // Rotar 30 grados en el eje Y
 //        cajaPizza.rotarEnY(x); // Rotar 30 grados en el eje Y
+        // Dibujar ProyectoFinal    
     }
 
     public void putPixel(int x, int y, Color color) {
@@ -99,7 +102,7 @@ public class Panel extends JPanel implements Runnable {
             frame.setLocationRelativeTo(null);
             frame.getContentPane().add(this); // Agrega el panel actual al JFrame
             frame.setVisible(true);
-            //frame.add(new ProyectoFinal());
+//            frame.add(new ProyectoFinal());
 
             // Iniciar el hilo de la animación después de que se haya creado el frame            
             animationThread.start();
@@ -114,6 +117,7 @@ public class Panel extends JPanel implements Runnable {
         while (true) {
             // Incrementar x en cada iteración           
             x += increment;
+            x1 += increment;
             y += increment;
             xInicial1 -= increment;
             xInicial2 -= increment;
@@ -129,16 +133,19 @@ public class Panel extends JPanel implements Runnable {
             } else {
                 mov = 500;
             }
-            if (x <= 360) {
+            if (x1 == 1000) {
+                x1 = 1;
+            }
+            if (x1 <= 360) {
                 rotar = x;
             } else {
                 rotar = 0;
             }
-            if (x >= 500) {
+            if (x1 >= 500) {
                 rotar2 += 1;
-                if(rotar2 <= 360){
+                if (rotar2 <= 360) {
                     rotar3 += 1;
-                }else{
+                } else {
                     rotar3 = 0;
                 }
             } else {

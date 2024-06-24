@@ -227,25 +227,6 @@ public class BoobSponja {
         //g2d.drawLine(projectedVertices[2][0], projectedVertices[2][1], projectedVertices[6][0], projectedVertices[6][1]);
         //g2d.drawLine(projectedVertices[3][0], projectedVertices[3][1], projectedVertices[7][0], projectedVertices[7][1]);
 
-// Dibujar las piernas debajo del cuboide
-        int piernaWidth = 10; // Ancho de la pierna
-        int piernaHeight = 80; // Altura de la pierna
-        int piernaY = projectedVertices[4][1] + 34; // Posición Y de las piernas (34 para dejar menos espacio entre las piernas y el cuboide)
-
-// Posición X de las piernas
-        int piernaX1 = projectedVertices[4][0] - piernaWidth / 2 ; // Izquierda de la pierna izquierda (menos 10 para que estén más juntas)
-        int piernaX2 = projectedVertices[7][0] - piernaWidth / 2 ; // Izquierda de la pierna derecha (más 10 para que estén más juntas)
-
-// Dibujar las piernas como rectángulos
-        g2d.setColor(Color.YELLOW); // Color de las piernas
-        g2d.fillRect(piernaX1, piernaY, piernaWidth, piernaHeight); // Dibujar pierna izquierda
-        g2d.fillRect(piernaX2, piernaY, piernaWidth, piernaHeight); // Dibujar pierna derecha
-
-// Dibujar contorno negro de las piernas
-        g2d.setColor(Color.BLACK);
-        g2d.drawRect(piernaX1, piernaY, piernaWidth, piernaHeight); // Contorno de la pierna izquierda
-        g2d.drawRect(piernaX2, piernaY, piernaWidth, piernaHeight); // Contorno de la pierna derecha
-
         g2d.dispose();
     }
 
@@ -312,6 +293,63 @@ public class BoobSponja {
 
         g2d.dispose();
     }
+
+    public void piernas(Graphics g, Color q) {
+        Graphics2D g2d = (Graphics2D) g.create();
+
+        // Proyectar las coordenadas 3D en 2D usando el vector de proyección
+        int[][] projectedVertices = new int[8][2];
+        for (int i = 0; i < vertices.length; i++) {
+            projectedVertices[i] = proyeccioncube(vertices[i][0], vertices[i][1], vertices[i][2], Xc, Yc, Zc);
+        }
+
+        // Dibujar las piernas debajo del cuboide
+        int piernaWidth = 10; // Ancho de la pierna
+        int piernaHeight = 60; // Altura de la pierna
+        int piernaY = projectedVertices[4][1] + 34; // Posición Y de las piernas
+
+// Calcular una posición X intermedia
+        int centroX = (projectedVertices[4][0] + projectedVertices[7][0]) / 2;
+
+// Posición X de las piernas
+        int piernaX1 = centroX - piernaWidth - 5; // Izquierda de la pierna izquierda, ajustada para que esté más cerca
+        int piernaX2 = centroX + 5; // Izquierda de la pierna derecha, ajustada para que esté más cerca
+
+// Dibujar las piernas como rectángulos
+        g2d.setColor(Color.YELLOW); // Color de las piernas
+        g2d.fillRect(piernaX1, piernaY, piernaWidth, piernaHeight); // Dibujar pierna izquierda
+        g2d.fillRect(piernaX2, piernaY, piernaWidth, piernaHeight); // Dibujar pierna derecha
+
+// Dibujar contorno negro de las piernas
+        g2d.setColor(Color.BLACK);
+        g2d.drawRect(piernaX1, piernaY, piernaWidth, piernaHeight); // Contorno de la pierna izquierda
+        g2d.drawRect(piernaX2, piernaY, piernaWidth, piernaHeight); // Contorno de la pierna derecha
+        
+        g2d.dispose();
+    }
+    
+public void rotarPiernasEnX(double angulo) {
+    double cosAngulo = Math.cos(Math.toRadians(angulo));
+    double sinAngulo = Math.sin(Math.toRadians(angulo));
+
+    // Coordenadas de la base de las piernas
+    int baseY = vertices[4][1]; // Posición Y de la base de las piernas
+    int baseZ = vertices[4][2]; // Posición Z de la base de las piernas
+
+    // Coordenadas de los puntos superiores de las piernas
+    int punto1Y = vertices[5][1];
+    int punto1Z = vertices[5][2];
+    int punto2Y = vertices[6][1];
+    int punto2Z = vertices[6][2];
+
+    // Rotar los puntos superiores de las piernas alrededor del eje X
+    vertices[5][1] = baseY + (int) ((punto1Y - baseY) * cosAngulo - (punto1Z - baseZ) * sinAngulo);
+    vertices[5][2] = baseZ + (int) ((punto1Y - baseY) * sinAngulo + (punto1Z - baseZ) * cosAngulo);
+    vertices[6][1] = baseY + (int) ((punto2Y - baseY) * cosAngulo - (punto2Z - baseZ) * sinAngulo);
+    vertices[6][2] = baseZ + (int) ((punto2Y - baseY) * sinAngulo + (punto2Z - baseZ) * cosAngulo);
+}
+
+
 
     private int[] proyeccion(int x1, int y1, int z1, int Xc, int Yc, int Zc) {
         double U = (double) Zc / (z1 + Zc);

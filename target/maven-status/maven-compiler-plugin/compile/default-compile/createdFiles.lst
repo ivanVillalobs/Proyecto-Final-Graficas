@@ -6,11 +6,14 @@ metodos\Esfera.class
 Estructuras\Iglu.class
 metodos\Cono.class
 metodos\Circulo.class
+panel\Panel$Point3D.class
 Estructuras\NootNoot.class
 panel\Panel.class
 metodos\floodFillIterative.class
+Estructuras\AudioPlayer.class
 Estructuras\BoobSponja.class
 metodos\Ovoide.class
+panel\Panel$Point2D.class
 Estructuras\Fondo.class
 metodos\circuloPolares.class
 metodos\MedioOvalo.class
